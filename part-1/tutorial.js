@@ -83,9 +83,10 @@ document.querySelector("#reload").addEventListener("click", () => {
 });
 
 /* Callbacks Example*/
-// "An event handler is a particular type of callback"
-/* Here is the first example WITHOUT using callbacks and asynchronous*/
-function step1(init) {
+/* Note: "An event handler is a particular type of callback. A callback is just a function that's passed into another function, with the expectation that the callback will be called at the appropriate time." */
+
+/* Below in lines 90-106 is the first example WITHOUT using callbacks and asynchronous*/
+/* function step1(init) {
     return init + 1;
 }
 function step2(init) {
@@ -102,5 +103,28 @@ function executeOperation() {
     console.log(`result: ${result}`);
 }
 executeOperation();  
+*/
 
-/* The same as above, but using callbacks */
+/* The code below is functionally the same as above, but using callbacks */
+function performStep1(init, callback) {
+    const result = init + 1;
+    callback(result);
+}
+function performStep2(init, callback) {
+    const result = init + 2;
+    callback(result);
+}
+function performStep3(init, callback) {
+    const result = init + 3;
+    callback(result);
+}
+function performOperation() {
+    performStep1(0, (result1) => {
+        performStep2(result1, (result2) => {
+            performStep3(result2, (result3) => {
+                console.log(`result is: ${result3}`);
+            });
+        });
+    });
+} 
+performOperation(); // As we see above, there is a deeply nested performOperation() function.
